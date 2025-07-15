@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Heart images -->
+<link rel="preload" href="images/heart.png" as="image">
+
+<!-- Balloon -->
+<link rel="preload" href="images/balloon.png" as="image">
+
+<!-- Album pages -->
+<link rel="preload" href="images/1_20250712_092330_0000.png" as="image">
+<link rel="preload" href="images/2_20250712_092330_0001.png" as="image">
+<link rel="preload" href="images/3_20250712_092331_0002.png" as="image">
+<link rel="preload" href="images/4_20250712_092331_0003.png" as="image">
+<link rel="preload" href="images/5_20250712_092331_0004.png" as="image">
+<link rel="preload" href="images/6_20250712_092331_0005.png" as="image">
+<link rel="preload" href="images/7_20250712_092331_0006.png" as="image">
+<link rel="preload" href="images/8_20250712_092331_0007.png" as="image">
+<link rel="preload" href="images/9_20250712_092332_0008.png" as="image">
+<link rel="preload" href="images/10_20250712_092332_0009.png" as="image">
+<link rel="preload" href="images/11_20250712_092333_0010.png" as="image">
+<link rel="preload" href="images/12_20250712_092333_0011.png" as="image">
+<link rel="preload" href="images/13_20250712_092333_0012.png" as="image">
+<link rel="preload" href="images/14_20250712_092333_0013.png" as="image">
+<link rel="preload" href="images/15_20250712_092333_0014.png" as="image">
+<link rel="preload" href="images/17_20250712_092334_0015.png" as="image">
+
+<!-- Stars background -->
+<link rel="preload" href="images/stars.png" as="image">
+  <title>Happy Birthday, Rojani</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0f172a;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      display: none;
+    }
+
+    section.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #facc15;
+    }
+
+    #heart {
+      width: 150px;
+      height: 150px;
+      background-image: url('images/heart.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    #caption {
+      font-size: 16px;
+      color: #cbd5e1;
+      margin-top: 20px;
+      font-style: italic;
+      z-index: 10;
+    }
+
+    #balloonContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: 0;
+      width: 40px;
+      height: 50px;
+      background-image: url('images/balloon.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: floatUp linear forwards;
+      opacity: 0.9;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to   { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    .moon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 110px;
+      height: 100px;
+      background: radial-gradient(circle, #cbd5e1 30%, transparent 70%);
+      border-radius: 70%;
+      box-shadow: 0 0 20px #cbd5e1, 0 0 50px #cbd5e1 inset;
+      animation: glow 10s infinite alternate;
+      z-index: 1000;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 25px #cbd5e1, 0 0 50px #cbd5e1 inset;
+      }
+      to {
+        box-shadow: 0 0 80px #cbd5e1, 0 0 80px #cbd5e1 inset;
+      }
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('images/stars.png') repeat;
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    .center-wrapper {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 150px;
+      padding-left: 150px;
+    }
+
+    .album {
+      width: 90vw;
+      max-width: 1080px;
+      aspect-ratio: 16 / 9;
+      perspective: 1800px;
+      position: relative;
+      border-radius: 20px;
+      transform-style: preserve-3d;
+      overflow: hidden;
+    }
+
+    .page {
+      width: 900px;
+      height: 70%;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 2px solid #facc15;
+      box-shadow: 0 0 20px rgba(255,255,255,0.08),
+                  0 0 30px rgba(0,0,0,0.4);
+      transform-origin: left center;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      backface-visibility: hidden;
+      opacity: 1;
+    }
+
+    .page.flipped {
+      transform: rotateY(-180deg);
+      opacity: 0.3;
+    }
+
+    .nav-tip {
+      position: absolute;
+      bottom: 14px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+      font-style: italic;
+      z-index: 1000;
+    }
+
+    @media screen and (max-width: 450px) {
+      .album {
+        width: 280px;
+        height: 420px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgMusic" src="music.mp3" autoplay loop></audio>
+
+  <!-- Intro Section -->
+  <section id="introSection" class="active">
+    <div class="moon"></div>
+    <div class="stars"></div>
+    <h1>Happy Birthday, Rojani 💛</h1>
+    <div id="heart" onclick="tapHeart()"></div>
+    <div id="caption">Each tap leaves a mark… until it opens for you ❤️</div>
+    <div id="balloonContainer"></div>
+  </section>
+
+  <!-- Album Section -->
+  <section id="albumSection">
+    <div class="moon"></div>
+    <div class="stars"></div>
+    <div class="center-wrapper">
+      <div class="album" id="album">
+        <div class="page" style="background-image: url('images/1_20250712_092330_0000.png');"></div>
+        <div class="page" style="background-image: url('images/2_20250712_092330_0001.png');"></div>
+        <div class="page" style="background-image: url('images/3_20250712_092331_0002.png');"></div>
+        <div class="page" style="background-image: url('images/4_20250712_092331_0003.png');"></div>
+        <div class="page" style="background-image: url('images/5_20250712_092331_0004.png');"></div>
+        <div class="page" style="background-image: url('images/6_20250712_092331_0005.png');"></div>
+        <div class="page" style="background-image: url('images/7_20250712_092331_0006.png');"></div>
+        <div class="page" style="background-image: url('images/8_20250712_092331_0007.png');"></div>
+        <div class="page" style="background-image: url('images/9_20250712_092332_0008.png');"></div>
+        <div class="page" style="background-image: url('images/10_20250712_092332_0009.png');"></div>
+        <div class="page" style="background-image: url('images/11_20250712_092333_0010.png');"></div>
+        <div class="page" style="background-image: url('images/12_20250712_092333_0011.png');"></div>
+        <div class="page" style="background-image: url('images/13_20250712_092333_0012.png');"></div>
+        <div class="page" style="background-image: url('images/14_20250712_092333_0013.png');"></div>
+        <div class="page" style="background-image: url('images/15_20250712_092333_0014.png');"></div>
+        <div class="page" style="background-image: url('images/17_20250712_092334_0015.png');"></div>
+      </div>
+    </div>
+    <div class="nav-tip">Tap to turn pages. Hold to linger longer 🤍</div>
+  </section>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+    let tapCount = 0;
+    const heart = document.getElementById('heart');
+    const container = document.getElementById('balloonContainer');
+    const introSection = document.getElementById('introSection');
+    const albumSection = document.getElementById('albumSection');
+    const pages = document.querySelectorAll('.page');
+    let current = 0;
+
+    function updatePages() {
+      pages.forEach((page, i) => {
+        page.style.zIndex = pages.length - i;
+        page.classList.remove('flipped');
+        if (i < current) page.classList.add('flipped');
+      });
+    }
+    updatePages();
+
+    function tapHeart() {
+      if (tapCount === 0) {
+        music.play().catch(() => {});
+      }
+      tapCount++;
+      heart.style.transform = `scale(${1 + tapCount * 0.02})`;
+
+      if (tapCount <= 5) {
+        heart.style.backgroundImage = `url('images/heart.png')`;
+      }
+
+      if (tapCount === 6) {
+        heart.style.backgroundImage = `url('images/heart.png')`;
+
+        // spawn balloons
+        for (let i = 0; i < 1000; i++) {
+          const b = document.createElement('div');
+          b.className = 'balloon';
+          b.style.left = `${Math.random() * 100}vw`;
+          b.style.animationDuration = `${2 + Math.random() * 5}s`;
+          b.style.animationDelay = `${Math.random() * 2}s`;
+          b.style.transform += ` translateX(${Math.random() * 40 - 20}px)`;
+          container.appendChild(b);
+        }
+
+        // fade out intro, then show album
+        setTimeout(() => {
+          introSection.style.transition = 'opacity 1.5s ease';
+          introSection.style.opacity = 0;
+        }, 6000);
+
+        setTimeout(() => {
+          introSection.classList.remove('active');
+          introSection.style.opacity = 1;
+          albumSection.classList.add('active');
+        }, 7600);
+      }
+    }
+
+    // album page flip
+    document.getElementById('album').addEventListener('click', () => {
+      current = (current + 1) % (pages.length + 1);
+      updatePages();
+    });
+  </script>
+</body>
+</html>
