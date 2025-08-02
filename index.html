@@ -254,113 +254,119 @@
     </div>
     <div class="nav-tip">Tap to turn pages. Hold to linger longer 🤍</div>
   </section>
+<script>
+  const music = document.getElementById('bgMusic');
+let tapCount = 0;
+const heart = document.getElementById('heart');
+const container = document.getElementById('balloonContainer');
+const introSection = document.getElementById('introSection');
+const albumSection = document.getElementById('albumSection');
+const pages = document.querySelectorAll('.page');
+let current = 0;
 
-  <script>
-    const music = document.getElementById('bgMusic');
-    let tapCount = 0;
-    const heart = document.getElementById('heart');
-    const container = document.getElementById('balloonContainer');
-    const introSection = document.getElementById('introSection');
-    const albumSection = document.getElementById('albumSection');
-    const pages = document.querySelectorAll('.page');
-    let current = 0;
-
-    function updatePages() {
-      pages.forEach((page, i) => {
-        page.style.zIndex = pages.length - i;
-        page.classList.remove('flipped');
-        if (i < current) page.classList.add('flipped');
-      });
-    }
-    updatePages();
-
-    function tapHeart() {
-      if (tapCount === 0) {
-        music.play().catch(() => {});
-      }
-      tapCount++;
-      heart.style.transform = `scale(${1 + tapCount * 0.02})`;
-
-      if (tapCount <= 5) {
-        heart.style.backgroundImage = `url('images/heart.png')`;
-      }
-
-      if (tapCount === 6) {
-        heart.style.backgroundImage = `url('images/heart.png')`;
-
-        // spawn balloons
-        for (let i = 0; i < 1000; i++) {
-          const b = document.createElement('div');
-          b.className = 'balloon';
-          b.style.left = `${Math.random() * 100}vw`;
-          b.style.animationDuration = `${2 + Math.random() * 5}s`;
-          b.style.animationDelay = `${Math.random() * 2}s`;
-          b.style.transform += ` translateX(${Math.random() * 40 - 20}px)`;
-          container.appendChild(b);
-        }
-
-        // fade out intro, then show album
-        setTimeout(() => {
-          introSection.style.transition = 'opacity 1.5s ease';
-          introSection.style.opacity = 0;
-        }, 6000);
-
-        setTimeout(() => {
-          introSection.classList.remove('active');
-          introSection.style.opacity = 1;
-         // Show typing effect for Transition 1
-const transition1 = document.createElement('div');
-transition1.textContent = '';
-transition1.style.fontSize = '22px';
-transition1.style.color = '#facc15';
-transition1.style.marginTop = '20px';
-transition1.style.textAlign = 'center';
-transition1.style.fontFamily = 'Segoe UI';
-transition1.style.animation = 'fadeIn 2s ease forwards';
-document.body.appendChild(transition1);
-
-let msgText = '💌 The words we couldn’t say';
-let i = 0;
-let typing1 = setInterval(() => {
-  transition1.textContent += msgText[i];
-  i++;
-  if (i === msgText.length) clearInterval(typing1);
-}, 100);
-
- albumSection.classList.add('active');
-        }, 7600);
-      }
-    }
-
-    // album page flip
-    document.getElementById('album').addEventListener('click', () => {
-      current = (current + 1) % (pages.length + 1);
-      updatePages();
-if (current === pages.length) {
-  const transition2 = document.createElement('div');
-  transition2.textContent = '';
-  transition2.style.fontSize = '22px';
-  transition2.style.color = '#facc15';
-  transition2.style.marginTop = '40px';
-  transition2.style.textAlign = 'center';
-  transition2.style.cursor = 'pointer';
-  transition2.style.fontFamily = 'Segoe UI';
-  transition2.style.animation = 'fadeIn 2s ease forwards';
-  document.body.appendChild(transition2);
-
-  let txt = '📸 The Moments that stayed';
-  let j = 0;
-  let typing2 = setInterval(() => {
-    transition2.textContent += txt[j];
-    j++;
-    if (j === txt.length) clearInterval(typing2);
-  }, 100);
-
-  transition2.onclick = () => {
-    window.location.href = 'photo-album/index.html';
-  };
+function updatePages() {
+  pages.forEach((page, i) => {
+    page.style.zIndex = pages.length - i;
+    page.classList.remove('flipped');
+    if (i < current) page.classList.add('flipped');
+  });
 }
-    });
+updatePages();
+
+function tapHeart() {
+  if (tapCount === 0) {
+    music.play().catch(() => {});
+  }
+  tapCount++;
+  heart.style.transform = `scale(${1 + tapCount * 0.02})`;
+
+  if (tapCount <= 5) {
+    heart.style.backgroundImage = `url('images/heart.png')`;
+  }
+
+  if (tapCount === 6) {
+    heart.style.backgroundImage = `url('images/heart.png')`;
+
+    // spawn balloons
+    for (let i = 0; i < 1000; i++) {
+      const b = document.createElement('div');
+      b.className = 'balloon';
+      b.style.left = `${Math.random() * 100}vw`;
+      b.style.animationDuration = `${2 + Math.random() * 5}s`;
+      b.style.animationDelay = `${Math.random() * 2}s`;
+      b.style.transform += ` translateX(${Math.random() * 40 - 20}px)`;
+      container.appendChild(b);
+    }
+
+    // fade out intro
+    setTimeout(() => {
+      introSection.style.transition = 'opacity 1.5s ease';
+      introSection.style.opacity = 0;
+    }, 6000);
+
+    // show typing effect after intro fades
+    setTimeout(() => {
+      introSection.classList.remove('active');
+      introSection.style.opacity = 1;
+
+      const transition1 = document.createElement('div');
+      transition1.textContent = '';
+      transition1.style.fontSize = '22px';
+      transition1.style.color = '#facc15';
+      transition1.style.marginTop = '20px';
+      transition1.style.textAlign = 'center';
+      transition1.style.fontFamily = 'Segoe UI';
+      transition1.style.animation = 'fadeIn 2s ease forwards';
+      transition1.style.cursor = 'pointer';
+      document.body.appendChild(transition1);
+
+      let msgText = '💌 The words we couldn’t say';
+      let i = 0;
+      let typing1 = setInterval(() => {
+        transition1.textContent += msgText[i];
+        i++;
+        if (i === msgText.length) clearInterval(typing1);
+      }, 100);
+
+      // reveal album only when this text is clicked
+      transition1.onclick = () => {
+        transition1.style.display = 'none';
+        albumSection.classList.add('active');
+      };
+    }, 7600);
+  }
+}
+
+// album page flip logic
+document.getElementById('album').addEventListener('click', () => {
+  current = (current + 1) % (pages.length + 1);
+  updatePages();
+
+  if (current === pages.length) {
+    const transition2 = document.createElement('div');
+    transition2.textContent = '';
+    transition2.style.fontSize = '22px';
+    transition2.style.color = '#facc15';
+    transition2.style.marginTop = '40px';
+    transition2.style.textAlign = 'center';
+    transition2.style.cursor = 'pointer';
+    transition2.style.fontFamily = 'Segoe UI';
+    transition2.style.animation = 'fadeIn 2s ease forwards';
+    document.body.appendChild(transition2);
+
+    let txt = '📸 The Moments that stayed';
+    let j = 0;
+    let typing2 = setInterval(() => {
+      transition2.textContent += txt[j];
+      j++;
+      if (j === txt.length) clearInterval(typing2);
+    }, 100);
+
+    transition2.onclick = () => {
+      window.location.href = 'photo-album/index.html';
+    };
+  }
+});
   </script>
 </body>
 </html>
