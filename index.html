@@ -316,33 +316,57 @@ function tapHeart() {
 
     // show typing effect after intro fades
     setTimeout(() => {
-      introSection.classList.remove('active');
-      introSection.style.opacity = 1;
+      // Typing effect container with same background
+const transitionSection = document.createElement('section');
+transitionSection.className = 'active';
+transitionSection.style.position = 'absolute';
+transitionSection.style.top = '0';
+transitionSection.style.left = '0';
+transitionSection.style.width = '100vw';
+transitionSection.style.height = '100vh';
+transitionSection.style.display = 'flex';
+transitionSection.style.flexDirection = 'column';
+transitionSection.style.alignItems = 'center';
+transitionSection.style.justifyContent = 'center';
+transitionSection.style.zIndex = '999';
 
-      const transition1 = document.createElement('div');
-      transition1.textContent = '';
-      transition1.style.fontSize = '22px';
-      transition1.style.color = '#facc15';
-      transition1.style.marginTop = '20px';
-      transition1.style.textAlign = 'center';
-      transition1.style.fontFamily = 'Segoe UI';
-      transition1.style.animation = 'fadeIn 2s ease forwards';
-      transition1.style.cursor = 'pointer';
-      document.body.appendChild(transition1);
+// Add stars and moon
+const stars = document.createElement('div');
+stars.className = 'stars';
+transitionSection.appendChild(stars);
 
-      let msgText = '💌 The words we couldn’t say';
-      let i = 0;
-      let typing1 = setInterval(() => {
-        transition1.textContent += msgText[i];
-        i++;
-        if (i === msgText.length) clearInterval(typing1);
-      }, 100);
+const moon = document.createElement('div');
+moon.className = 'moon';
+transitionSection.appendChild(moon);
 
-      // reveal album only when this text is clicked
-      transition1.onclick = () => {
-        transition1.style.display = 'none';
-        albumSection.classList.add('active');
-      };
+// Add typing effect text
+const transition1 = document.createElement('div');
+transition1.textContent = '';
+transition1.style.fontSize = '22px';
+transition1.style.color = '#facc15';
+transition1.style.fontFamily = 'Segoe UI';
+transition1.style.textAlign = 'center';
+transition1.style.cursor = 'pointer';
+transition1.style.animation = 'fadeIn 2s ease forwards';
+transitionSection.appendChild(transition1);
+
+// Add to page
+document.body.appendChild(transitionSection);
+
+// Typing animation
+let msgText = '💌 The words we couldn’t say';
+let i = 0;
+let typing1 = setInterval(() => {
+  transition1.textContent += msgText[i];
+  i++;
+  if (i === msgText.length) clearInterval(typing1);
+}, 100);
+
+// On tap → remove transition, reveal album
+transition1.onclick = () => {
+  document.body.removeChild(transitionSection);
+  albumSection.classList.add('active');
+};
     }, 7600);
   }
 }
