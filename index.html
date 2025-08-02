@@ -304,7 +304,26 @@
         setTimeout(() => {
           introSection.classList.remove('active');
           introSection.style.opacity = 1;
-          albumSection.classList.add('active');
+         // Show typing effect for Transition 1
+const transition1 = document.createElement('div');
+transition1.textContent = '';
+transition1.style.fontSize = '22px';
+transition1.style.color = '#facc15';
+transition1.style.marginTop = '20px';
+transition1.style.textAlign = 'center';
+transition1.style.fontFamily = 'Segoe UI';
+transition1.style.animation = 'fadeIn 2s ease forwards';
+document.body.appendChild(transition1);
+
+let msgText = '💌 The words we couldn’t say';
+let i = 0;
+let typing1 = setInterval(() => {
+  transition1.textContent += msgText[i];
+  i++;
+  if (i === msgText.length) clearInterval(typing1);
+}, 100);
+
+ albumSection.classList.add('active');
         }, 7600);
       }
     }
@@ -313,6 +332,30 @@
     document.getElementById('album').addEventListener('click', () => {
       current = (current + 1) % (pages.length + 1);
       updatePages();
+if (current === pages.length) {
+  const transition2 = document.createElement('div');
+  transition2.textContent = '';
+  transition2.style.fontSize = '22px';
+  transition2.style.color = '#facc15';
+  transition2.style.marginTop = '40px';
+  transition2.style.textAlign = 'center';
+  transition2.style.cursor = 'pointer';
+  transition2.style.fontFamily = 'Segoe UI';
+  transition2.style.animation = 'fadeIn 2s ease forwards';
+  document.body.appendChild(transition2);
+
+  let txt = '📸 The Moments that stayed';
+  let j = 0;
+  let typing2 = setInterval(() => {
+    transition2.textContent += txt[j];
+    j++;
+    if (j === txt.length) clearInterval(typing2);
+  }, 100);
+
+  transition2.onclick = () => {
+    window.location.href = 'photo-album/index.html';
+  };
+}
     });
   </script>
 </body>
