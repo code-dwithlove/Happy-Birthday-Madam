@@ -372,21 +372,45 @@ transition1.onclick = () => {
 }
 
 // album page flip logic
+// album page flip
 document.getElementById('album').addEventListener('click', () => {
   current = (current + 1) % (pages.length + 1);
   updatePages();
 
   if (current === pages.length) {
+    // 📸 Transition 2 section
+    const transition2Section = document.createElement('section');
+    transition2Section.className = 'active';
+    transition2Section.style.position = 'absolute';
+    transition2Section.style.top = '0';
+    transition2Section.style.left = '0';
+    transition2Section.style.width = '100vw';
+    transition2Section.style.height = '100vh';
+    transition2Section.style.display = 'flex';
+    transition2Section.style.flexDirection = 'column';
+    transition2Section.style.alignItems = 'center';
+    transition2Section.style.justifyContent = 'center';
+    transition2Section.style.zIndex = '999';
+
+    const stars = document.createElement('div');
+    stars.className = 'stars';
+    transition2Section.appendChild(stars);
+
+    const moon = document.createElement('div');
+    moon.className = 'moon';
+    transition2Section.appendChild(moon);
+
     const transition2 = document.createElement('div');
     transition2.textContent = '';
     transition2.style.fontSize = '22px';
     transition2.style.color = '#facc15';
-    transition2.style.marginTop = '40px';
+    transition2.style.fontFamily = 'Segoe UI';
     transition2.style.textAlign = 'center';
     transition2.style.cursor = 'pointer';
-    transition2.style.fontFamily = 'Segoe UI';
     transition2.style.animation = 'fadeIn 2s ease forwards';
-    document.body.appendChild(transition2);
+    transition2Section.appendChild(transition2);
+
+    document.body.appendChild(transition2Section);
 
     let txt = '📸 The Moments that stayed';
     let j = 0;
@@ -397,6 +421,7 @@ document.getElementById('album').addEventListener('click', () => {
     }, 100);
 
     transition2.onclick = () => {
+      document.body.removeChild(transition2Section);
       window.location.href = 'https://code-dwithlove.github.io/Album/';
     };
   }
