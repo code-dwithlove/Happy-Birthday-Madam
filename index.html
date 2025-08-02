@@ -213,6 +213,17 @@
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+    .typing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* or your chosen section height */
+  text-align: center;
+}
+
+.typing-text {
+  font-size: 2rem;
+}
   </style>
 </head>
 <body>
@@ -363,7 +374,7 @@ document.getElementById('album').addEventListener('click', () => {
     }, 100);
 
     transition2.onclick = () => {
-      window.location.href = 'photo-album/index.html';
+      window.location.href = 'https://code-dwithlove.github.io/Album/';
     };
   }
 });
